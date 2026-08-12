@@ -92,3 +92,9 @@ def search_todos(keyword):
     results = [t for t in todos if keyword.lower() in t.lower()]  # bug: case-sensitive
     for r in results:
         print(r)
+
+def summary():
+    total = len(todos)
+    completed = len(done)
+    pending = total - completed
+    print(f"Total: {total} | Done: {completed} | Pending: {pending}")
