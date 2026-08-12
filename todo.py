@@ -87,3 +87,8 @@ def sort_todos():
     order = {"HIGH": 0, "MED": 1, "LOW": 2}
     todos.sort(key=lambda x: order.get(x.split("|")[0], 9))
     print("Sorted by priority.")
+
+def search_todos(keyword):
+    results = [t for t in todos if keyword in t]  # bug: case-sensitive
+    for r in results:
+        print(r)
