@@ -3,36 +3,40 @@ import os
 todos = []
 done = []
 SAVE_FILE = "todos.txt"
+PRIORITIES = ["HIGH", "MED", "LOW"]
 
-def add_todo(task):
+def add_todo(task, priority="MED"):
     if not task:
         print("Task cannot be empty.")
         return
-    todos.append(task)
-    print(f"Added: {task}")
+    if priority not in PRIORITIES:
+        priority = "MED"
+    todos.append(f"{priority}|{task}")
+    print(f"[{priority}] Added: {task}")
 
 def list_todos():
     if not todos:
         print("No todos yet.")
         return
-    for i, todo in enumerate(todos, 1):
-        status = "[x]" if todo in done else "[ ]"
-        print(f"{i}. {status} {todo}")
+    for i, entry in enumerate(todos, 1):
+        priority, task = entry.split("|", 1)
+        status = "[x]" if entry in done else "[ ]"
+        print(f"{i}. {status} [{priority}] {task}")
 
 def delete_todo(index):
     if index < 1 or index > len(todos):
         print("Invalid index.")
         return
     removed = todos.pop(index - 1)
-    print(f"Deleted: {removed}")
+    print(f"Deleted: {removed.split('|',1)[1]}")
 
 def complete_todo(index):
     if index < 1 or index > len(todos):
         print("Invalid index.")
         return
-    task = todos[index - 1]
-    done.append(task)
-    print(f"Completed: {task}")
+    entry = todos[index - 1]
+    done.append(entry)
+    print(f"Completed: {entry.split('|',1)[1]}")
 
 def save_todos():
     with open(SAVE_FILE, "w") as f:
@@ -58,7 +62,8 @@ if __name__ == "__main__":
             break
         elif cmd == "add":
             task = input("Task: ").strip()
-            add_todo(task)
+            pri = input("Priority (HIGH/MED/LOW) [MED]: ").strip().upper() or "MED"
+            add_todo(task, pri)
         elif cmd == "list":
             list_todos()
         elif cmd == "done":
