@@ -32,3 +32,11 @@ if __name__ == "__main__":
             add_todo(task)
         elif cmd == "list":
             list_todos()
+        elif cmd == "done":
+            idx = int(input("Task number: "))
+            complete_todo(idx)
+        elif cmd == "del":
+            idx = int(input("Task number: "))
+            delete_todo(idx)
+        else:
+            print("Unknown command.")
