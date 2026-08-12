@@ -55,3 +55,9 @@ if __name__ == "__main__":
                 print("Please enter a valid number.")
         else:
             print("Unknown command.")
+
+def save_todos(path="C:/todos.txt"):  # bug: hardcoded bad path
+    with open(path, "w") as f:
+        for t in todos:
+            f.write(t + "\n")
+    print("Saved.")
