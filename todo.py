@@ -82,3 +82,8 @@ if __name__ == "__main__":
             save_todos()
         else:
             print("Unknown command.")
+
+def sort_todos():
+    order = {"HIGH": 0, "MED": 1, "LOW": 2}
+    todos.sort(key=lambda x: order.get(x.split("|")[0], 9))
+    print("Sorted by priority.")
