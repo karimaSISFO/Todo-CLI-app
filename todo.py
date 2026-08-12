@@ -89,6 +89,6 @@ def sort_todos():
     print("Sorted by priority.")
 
 def search_todos(keyword):
-    results = [t for t in todos if keyword in t]  # bug: case-sensitive
+    results = [t for t in todos if keyword.lower() in t.lower()]  # bug: case-sensitive
     for r in results:
         print(r)
