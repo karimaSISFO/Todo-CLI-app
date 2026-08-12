@@ -2,6 +2,9 @@ todos = []
 done = []
 
 def add_todo(task):
+    if not task:
+        print("Task cannot be empty.")
+        return
     todos.append(task)
     print(f"Added: {task}")
 
@@ -14,10 +17,16 @@ def list_todos():
         print(f"{i}. {status} {todo}")
 
 def delete_todo(index):
+    if index < 1 or index > len(todos):
+        print("Invalid index.")
+        return
     removed = todos.pop(index - 1)
     print(f"Deleted: {removed}")
 
 def complete_todo(index):
+    if index < 1 or index > len(todos):
+        print("Invalid index.")
+        return
     task = todos[index - 1]
     done.append(task)
     print(f"Completed: {task}")
