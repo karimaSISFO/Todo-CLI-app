@@ -77,5 +77,3 @@ if __name__ == "__main__":
             save_todos()
         else:
             print("Unknown command.")
-# WIP: priority support — format not decided yet
-# todos will store as "HIGH|Buy groceries"
