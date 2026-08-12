@@ -12,5 +12,5 @@ def list_todos():
         print(f"{i}. {todo}")
 
 def delete_todo(index):
-    removed = todos.pop(index)  # bug: should be index-1
+    removed = todos.pop(index - 1)
     print(f"Deleted: {removed}")
