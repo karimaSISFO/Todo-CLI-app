@@ -42,10 +42,16 @@ if __name__ == "__main__":
         elif cmd == "list":
             list_todos()
         elif cmd == "done":
-            idx = int(input("Task number: "))
-            complete_todo(idx)
+            try:
+                idx = int(input("Task number: "))
+                complete_todo(idx)
+            except ValueError:
+                print("Please enter a valid number.")
         elif cmd == "del":
-            idx = int(input("Task number: "))
-            delete_todo(idx)
+            try:
+                idx = int(input("Task number: "))
+                delete_todo(idx)
+            except ValueError:
+                print("Please enter a valid number.")
         else:
             print("Unknown command.")
