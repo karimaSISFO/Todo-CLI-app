@@ -1,5 +1,8 @@
+import os
+
 todos = []
 done = []
+SAVE_FILE = "todos.txt"
 
 def add_todo(task):
     if not task:
@@ -31,9 +34,15 @@ def complete_todo(index):
     done.append(task)
     print(f"Completed: {task}")
 
+def save_todos():
+    with open(SAVE_FILE, "w") as f:
+        for t in todos:
+            f.write(t + "\n")
+    print(f"Saved {len(todos)} tasks.")
+
 if __name__ == "__main__":
     while True:
-        cmd = input("Command (add/list/done/del/quit): ").strip()
+        cmd = input("Command (add/list/done/del/save/quit): ").strip()
         if cmd == "quit":
             break
         elif cmd == "add":
@@ -53,11 +62,7 @@ if __name__ == "__main__":
                 delete_todo(idx)
             except ValueError:
                 print("Please enter a valid number.")
+        elif cmd == "save":
+            save_todos()
         else:
             print("Unknown command.")
-
-def save_todos(path="C:/todos.txt"):  # bug: hardcoded bad path
-    with open(path, "w") as f:
-        for t in todos:
-            f.write(t + "\n")
-    print("Saved.")
