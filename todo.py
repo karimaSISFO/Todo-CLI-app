@@ -27,3 +27,8 @@ if __name__ == "__main__":
         cmd = input("Command (add/list/done/del/quit): ").strip()
         if cmd == "quit":
             break
+        elif cmd == "add":
+            task = input("Task: ").strip()
+            add_todo(task)
+        elif cmd == "list":
+            list_todos()
