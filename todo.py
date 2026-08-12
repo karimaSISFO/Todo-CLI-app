@@ -21,3 +21,9 @@ def complete_todo(index):
     task = todos[index - 1]
     done.append(task)
     print(f"Completed: {task}")
+
+if __name__ == "__main__":
+    while True:
+        cmd = input("Command (add/list/done/del/quit): ").strip()
+        if cmd == "quit":
+            break
