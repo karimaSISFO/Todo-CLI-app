@@ -1,5 +1,5 @@
 todos = []
 
 def add_todo(task):
-    todos.apend(task)  # bug: typo
+    todos.append(task)
     print(f"Added: {task}")
