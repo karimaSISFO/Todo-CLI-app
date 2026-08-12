@@ -5,6 +5,13 @@ done = []
 SAVE_FILE = "todos.txt"
 PRIORITIES = ["HIGH", "MED", "LOW"]
 
+def get_index(prompt="Task number: "):
+    try:
+        return int(input(prompt))
+    except ValueError:
+        print("Please enter a valid number.")
+        return None
+
 def add_todo(task, priority="MED"):
     if not task:
         print("Task cannot be empty.")
@@ -54,10 +61,26 @@ def load_todos():
                 todos.append(task)
     print(f"Loaded {len(todos)} tasks.")
 
+def sort_todos():
+    order = {"HIGH": 0, "MED": 1, "LOW": 2}
+    todos.sort(key=lambda x: order.get(x.split("|")[0], 9))
+    print("Sorted by priority.")
+
+def search_todos(keyword):
+    results = [t for t in todos if keyword.lower() in t.lower()]
+    for r in results:
+        print(r)
+
+def summary():
+    total = len(todos)
+    completed = len(done)
+    pending = total - completed
+    print(f"Total: {total} | Done: {completed} | Pending: {pending}")
+
 if __name__ == "__main__":
     load_todos()
     while True:
-        cmd = input("Command (add/list/done/del/save/quit): ").strip()
+        cmd = input("Command (add/list/done/del/save/sort/search/summary/quit): ").strip()
         if cmd == "quit":
             break
         elif cmd == "add":
@@ -67,34 +90,19 @@ if __name__ == "__main__":
         elif cmd == "list":
             list_todos()
         elif cmd == "done":
-            try:
-                idx = int(input("Task number: "))
-                complete_todo(idx)
-            except ValueError:
-                print("Please enter a valid number.")
+            idx = get_index()
+            if idx: complete_todo(idx)
         elif cmd == "del":
-            try:
-                idx = int(input("Task number: "))
-                delete_todo(idx)
-            except ValueError:
-                print("Please enter a valid number.")
+            idx = get_index()
+            if idx: delete_todo(idx)
         elif cmd == "save":
             save_todos()
+        elif cmd == "sort":
+            sort_todos()
+        elif cmd == "search":
+            kw = input("Keyword: ").strip()
+            search_todos(kw)
+        elif cmd == "summary":
+            summary()
         else:
             print("Unknown command.")
-
-def sort_todos():
-    order = {"HIGH": 0, "MED": 1, "LOW": 2}
-    todos.sort(key=lambda x: order.get(x.split("|")[0], 9))
-    print("Sorted by priority.")
-
-def search_todos(keyword):
-    results = [t for t in todos if keyword.lower() in t.lower()]  # bug: case-sensitive
-    for r in results:
-        print(r)
-
-def summary():
-    total = len(todos)
-    completed = len(done)
-    pending = total - completed
-    print(f"Total: {total} | Done: {completed} | Pending: {pending}")
