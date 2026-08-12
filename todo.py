@@ -40,7 +40,18 @@ def save_todos():
             f.write(t + "\n")
     print(f"Saved {len(todos)} tasks.")
 
+def load_todos():
+    if not os.path.exists(SAVE_FILE):
+        return
+    with open(SAVE_FILE, "r") as f:
+        for line in f:
+            task = line.strip()
+            if task:
+                todos.append(task)
+    print(f"Loaded {len(todos)} tasks.")
+
 if __name__ == "__main__":
+    load_todos()
     while True:
         cmd = input("Command (add/list/done/del/save/quit): ").strip()
         if cmd == "quit":
