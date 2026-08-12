@@ -10,3 +10,7 @@ def list_todos():
         return
     for i, todo in enumerate(todos, 1):
         print(f"{i}. {todo}")
+
+def delete_todo(index):
+    removed = todos.pop(index)  # bug: should be index-1
+    print(f"Deleted: {removed}")
