@@ -115,3 +115,12 @@ def load_todos():
         print(colorize(f"Loaded {len(data)} tasks.", CYAN))
     except (json.JSONDecodeError, KeyError):
         print(colorize("Warning: save file corrupted, starting fresh.", YELLOW))
+
+def export_json(path="export.json"):
+    with open(path, "w") as f:
+        json.dump({
+            "exported": datetime.now().isoformat(),
+            "total":    len(todos),
+            "tasks":    todos,
+        }, f, indent=2)
+    print(colorize(f"Exported to {path}", GREEN))
