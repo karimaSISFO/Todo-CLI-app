@@ -172,3 +172,12 @@ def stats():
     for p in PRIORITIES:
         print(f"  {colorize(p, PRIORITY_COLOR[p]):<22}: {by_pri[p]}")
     print()
+
+def search(keyword):
+    kw = keyword.lower()
+    results = [t for t in todos if kw == t["title"].lower()]
+    if not results:
+        print(colorize(f"No results for '{keyword}'", GRAY))
+        return
+    for i, task in enumerate(results, 1):
+        print_task(i, task)
