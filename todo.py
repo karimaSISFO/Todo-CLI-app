@@ -124,3 +124,14 @@ def export_json(path="export.json"):
             "tasks":    todos,
         }, f, indent=2)
     print(colorize(f"Exported to {path}", GREEN))
+
+def filter_by_tag(tag):
+    tag = tag.lstrip("#").lower()
+    results = [t for t in todos if tag in [x.lower() for x in t["tags"]]]
+    if not results:
+        print(colorize(f"No tasks with tag #{tag}", GRAY))
+        return
+    print(colorize(f"\n  Tagged #{tag}:", BOLD))
+    for i, task in enumerate(results, 1):
+        print_task(i, task)
+    print()
