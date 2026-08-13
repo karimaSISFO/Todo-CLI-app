@@ -214,3 +214,10 @@ def sort_todos(by="priority"):
     elif by == "title":
         todos.sort(key=lambda t: t["title"].lower())
     print(colorize(f"Sorted by {by}.", CYAN))
+
+def get_index(prompt="Task number: "):
+    try:
+        return int(input(f"  {prompt}"))
+    except ValueError:
+        print(colorize("Please enter a valid number.", RED))
+        return None
