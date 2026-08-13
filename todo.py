@@ -39,3 +39,6 @@ def print_task(i, task):
     due   = colorize(f" due:{task['due']}", RED) if task["due"] else ""
     tags  = (" " + " ".join(colorize(f"#{t}", CYAN) for t in task["tags"])) if task["tags"] else ""
     print(f"  {i}. {check} {label} {title}{due}{tags}")
+
+def parse_tags(raw):
+    return [t.lstrip("#").strip() for t in raw.split() if t.strip()]
