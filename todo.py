@@ -42,3 +42,11 @@ def print_task(i, task):
 
 def parse_tags(raw):
     return [t.lstrip("#").strip() for t in raw.split() if t.strip()]
+
+def add_todo(title, priority="MED", due=None, tags=None):
+    if not title:
+        print(colorize("Error: title cannot be empty.", RED))
+        return
+    task = make_task(title, priority, due, tags)
+    todos.append(task)
+    print(colorize(f"Added: {title}", GREEN))
