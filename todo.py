@@ -158,3 +158,17 @@ def get_overdue():
             except ValueError:
                 pass
     return result
+
+def stats():
+    total   = len(todos)
+    done_ct = sum(1 for t in todos if t["done"])
+    overdue = len(get_overdue())
+    by_pri  = {p: sum(1 for t in todos if t["priority"] == p) for p in PRIORITIES}
+    print(colorize("\n  ── Stats ───────────────────────", BOLD))
+    print(f"  Total   : {total}")
+    print(f"  Done    : {colorize(str(done_ct), GREEN)}")
+    print(f"  Pending : {colorize(str(total - done_ct), YELLOW)}")
+    print(f"  Overdue : {colorize(str(overdue), RED)}")
+    for p in PRIORITIES:
+        print(f"  {colorize(p, PRIORITY_COLOR[p]):<22}: {by_pri[p]}")
+    print()
