@@ -203,7 +203,14 @@ def sort_todos(by="priority"):
     if by == "priority":
         todos.sort(key=lambda t: pri_order.get(t["priority"], 9))
     elif by == "due":
-        todos.sort(key=lambda t: t["due"] or "9999-99-99")
+        def due_key(t):
+            if not t["due"]:
+                return datetime(9999, 12, 31)
+            try:
+                return datetime.fromisoformat(t["due"])
+            except ValueError:
+                return datetime(9999, 12, 31)
+        todos.sort(key=due_key)
     elif by == "title":
         todos.sort(key=lambda t: t["title"].lower())
     print(colorize(f"Sorted by {by}.", CYAN))
