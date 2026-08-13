@@ -197,3 +197,13 @@ def edit_task(index, title=None, priority=None, due=None, tags=None):
     if due is not None: task["due"] = due or None
     if tags is not None: task["tags"] = tags
     print(colorize(f"Updated: {task['title']}", GREEN))
+
+def sort_todos(by="priority"):
+    pri_order = {"HIGH": 0, "MED": 1, "LOW": 2}
+    if by == "priority":
+        todos.sort(key=lambda t: pri_order.get(t["priority"], 9))
+    elif by == "due":
+        todos.sort(key=lambda t: t["due"] or "9999-99-99")
+    elif by == "title":
+        todos.sort(key=lambda t: t["title"].lower())
+    print(colorize(f"Sorted by {by}.", CYAN))
