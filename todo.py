@@ -135,3 +135,14 @@ def filter_by_tag(tag):
     for i, task in enumerate(results, 1):
         print_task(i, task)
     print()
+
+def filter_by_priority(pri):
+    pri = pri.upper()
+    results = [t for t in todos if t["priority"] == pri]
+    if not results:
+        print(colorize(f"No {pri} tasks.", GRAY))
+        return
+    print(colorize(f"\n  {pri} tasks:", BOLD))
+    for i, task in enumerate(results, 1):
+        print_task(i, task)
+    print()
