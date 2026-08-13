@@ -17,3 +17,12 @@ def make_task(title, priority="MED", due=None, tags=None):
         "due":     due,
         "tags":    tags or [],
     }
+
+RESET  = "\033[0m"
+BOLD   = "\033[1m"
+RED    = "\033[31m"
+YELLOW = "\033[33m"
+GREEN  = "\033[32m"
+CYAN   = "\033[36m"
+GRAY   = "\033[90m"
+PRIORITY_COLOR = {"HIGH": "\033[31m", "MED": "\033[33m", "LOW": "\033[90m"}
