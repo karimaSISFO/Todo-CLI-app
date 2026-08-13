@@ -175,9 +175,14 @@ def stats():
 
 def search(keyword):
     kw = keyword.lower()
-    results = [t for t in todos if kw == t["title"].lower()]
+    def matches(t):
+        return kw in t["title"].lower() or any(kw in tag.lower() for tag in t["tags"])
+    results = [t for t in todos if matches(t)]
     if not results:
         print(colorize(f"No results for '{keyword}'", GRAY))
         return
+    print(colorize(f"
+  Results for '{keyword}':", BOLD))
     for i, task in enumerate(results, 1):
         print_task(i, task)
+    print()
