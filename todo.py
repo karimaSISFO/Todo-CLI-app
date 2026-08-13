@@ -148,5 +148,13 @@ def filter_by_priority(pri):
     print()
 
 def get_overdue():
-    today = datetime.now().strftime("%Y-%m-%d")
-    return [t for t in todos if t["due"] and t["due"] < today and not t["done"]]
+    today = datetime.now().date()
+    result = []
+    for t in todos:
+        if t["due"] and not t["done"]:
+            try:
+                if datetime.fromisoformat(t["due"]).date() < today:
+                    result.append(t)
+            except ValueError:
+                pass
+    return result
