@@ -186,3 +186,14 @@ def search(keyword):
     for i, task in enumerate(results, 1):
         print_task(i, task)
     print()
+
+def edit_task(index, title=None, priority=None, due=None, tags=None):
+    if index < 1 or index > len(todos):
+        print(colorize("Invalid task number.", RED))
+        return
+    task = todos[index - 1]
+    if title:    task["title"]    = title
+    if priority and priority in PRIORITIES: task["priority"] = priority
+    if due is not None: task["due"] = due or None
+    if tags is not None: task["tags"] = tags
+    print(colorize(f"Updated: {task['title']}", GREEN))
