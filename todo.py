@@ -104,3 +104,8 @@ def save_todos():
     with open(SAVE_FILE, "w") as f:
         json.dump(todos, f, indent=2)
     print(colorize(f"Saved {len(todos)} tasks to {SAVE_FILE}", GREEN))
+
+def load_todos():
+    data = json.load(open(SAVE_FILE))
+    todos.extend(data)
+    print(colorize(f"Loaded {len(data)} tasks.", CYAN))
