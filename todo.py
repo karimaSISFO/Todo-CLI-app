@@ -66,7 +66,7 @@ def complete_todo(index):
     if index < 1 or index > len(todos):
         print(colorize("Invalid task number.", RED))
         return
-    task = todos[index]
+    task = todos[index - 1]
     task["done"] = True
     history.append(("complete", task["id"]))
     print(colorize(f"Completed: {task['title']}", GREEN))
