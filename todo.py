@@ -70,3 +70,11 @@ def complete_todo(index):
     task["done"] = True
     history.append(("complete", task["id"]))
     print(colorize(f"Completed: {task['title']}", GREEN))
+
+def delete_todo(index):
+    if index < 1 or index > len(todos):
+        print(colorize("Invalid task number.", RED))
+        return
+    task = todos.pop(index - 1)
+    history.append(("delete", task))
+    print(colorize(f"Deleted: {task['title']}", YELLOW))
