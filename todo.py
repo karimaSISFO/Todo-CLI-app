@@ -87,6 +87,15 @@ def undo():
     if action == "add":
         todos[:] = [t for t in todos if t["id"] != payload]
         print(colorize("Undid last add.", YELLOW))
+    elif action == "complete":
+        for t in todos:
+            if t["id"] == payload:
+                t["done"] = False
+                print(colorize(f"Undid complete: {t['title']}", YELLOW))
+                break
+    elif action == "delete":
+        todos.append(payload)
+        todos.sort(key=lambda t: t["created"])
+        print(colorize(f"Restored: {payload['title']}", GREEN))
     else:
-        print(colorize(f"Undo not yet supported for: {action}", RED))
-        history.append((action, payload))
+        print(colorize(f"Cannot undo: {action}", RED))
