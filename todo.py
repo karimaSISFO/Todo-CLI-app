@@ -221,3 +221,95 @@ def get_index(prompt="Task number: "):
     except ValueError:
         print(colorize("Please enter a valid number.", RED))
         return None
+
+HELP = colorize("""
+  add      Add new task          list     List all tasks
+  pending  Pending tasks only    done     Mark complete
+  del      Delete task           edit     Edit task fields
+  undo     Undo last action      search   Search by keyword
+  tag      Filter by tag         pri      Filter by priority
+  sort     Sort tasks            overdue  Show overdue
+  stats    Statistics            save     Save to file
+  export   Export JSON           quit     Save and exit
+""", CYAN)
+
+if __name__ == "__main__":
+    load_todos()
+    overdue = get_overdue()
+    if overdue:
+        print(colorize(f"\n  ⚠ {len(overdue)} overdue task(s)!", RED))
+    print(colorize("\n  Todo CLI v2.0", BOLD) + colorize("  type 'help' for commands\n", GRAY))
+
+    while True:
+        try:
+            cmd = input(colorize("  > ", CYAN)).strip().lower()
+        except (KeyboardInterrupt, EOFError):
+            print()
+            save_todos()
+            break
+
+        if cmd == "quit":
+            save_todos(); break
+        elif cmd == "help":
+            print(HELP)
+        elif cmd == "add":
+            title    = input("  Title: ").strip()
+            pri      = input("  Priority (HIGH/MED/LOW) [MED]: ").strip().upper() or "MED"
+            due      = input("  Due date YYYY-MM-DD (optional): ").strip() or None
+            raw_tags = input("  Tags e.g. work personal (optional): ").strip()
+            add_todo(title, pri, due, parse_tags(raw_tags) if raw_tags else [])
+        elif cmd == "list":
+            list_todos()
+        elif cmd == "pending":
+            list_todos(show_done=False)
+        elif cmd == "done":
+            list_todos()
+            idx = get_index()
+            if idx: complete_todo(idx)
+        elif cmd == "del":
+            list_todos()
+            idx = get_index()
+            if idx: delete_todo(idx)
+        elif cmd == "edit":
+            list_todos()
+            idx = get_index()
+            if idx:
+                title    = input("  New title (enter to skip): ").strip() or None
+                pri      = input("  New priority (enter to skip): ").strip().upper() or None
+                due      = input("  New due date (enter to skip, 'clear' to remove): ").strip()
+                raw_tags = input("  New tags (enter to skip): ").strip()
+                edit_task(idx, title, pri,
+                          "" if due == "clear" else due or None,
+                          parse_tags(raw_tags) if raw_tags else None)
+        elif cmd == "undo":
+            undo()
+        elif cmd == "search":
+            kw = input("  Keyword: ").strip()
+            search(kw)
+        elif cmd == "tag":
+            tag = input("  Tag: ").strip()
+            filter_by_tag(tag)
+        elif cmd == "pri":
+            pri = input("  Priority (HIGH/MED/LOW): ").strip()
+            filter_by_priority(pri)
+        elif cmd == "sort":
+            by = input("  Sort by (priority/due/title) [priority]: ").strip() or "priority"
+            sort_todos(by)
+        elif cmd == "overdue":
+            results = get_overdue()
+            if not results:
+                print(colorize("  No overdue tasks.", GREEN))
+            else:
+                print(colorize(f"\n  Overdue ({len(results)}):", RED))
+                for i, task in enumerate(results, 1):
+                    print_task(i, task)
+                print()
+        elif cmd == "stats":
+            stats()
+        elif cmd == "save":
+            save_todos()
+        elif cmd == "export":
+            path = input("  Output file [export.json]: ").strip() or "export.json"
+            export_json(path)
+        else:
+            print(colorize(f"  Unknown command: '{cmd}'. Type 'help'.", GRAY))
