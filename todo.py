@@ -99,3 +99,8 @@ def undo():
         print(colorize(f"Restored: {payload['title']}", GREEN))
     else:
         print(colorize(f"Cannot undo: {action}", RED))
+
+def save_todos():
+    with open(SAVE_FILE, "w") as f:
+        json.dump(todos, f, indent=2)
+    print(colorize(f"Saved {len(todos)} tasks to {SAVE_FILE}", GREEN))
