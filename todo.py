@@ -78,3 +78,15 @@ def delete_todo(index):
     task = todos.pop(index - 1)
     history.append(("delete", task))
     print(colorize(f"Deleted: {task['title']}", YELLOW))
+
+def undo():
+    if not history:
+        print(colorize("Nothing to undo.", GRAY))
+        return
+    action, payload = history.pop()
+    if action == "add":
+        todos[:] = [t for t in todos if t["id"] != payload]
+        print(colorize("Undid last add.", YELLOW))
+    else:
+        print(colorize(f"Undo not yet supported for: {action}", RED))
+        history.append((action, payload))
