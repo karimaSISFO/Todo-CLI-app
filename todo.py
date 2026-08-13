@@ -106,6 +106,12 @@ def save_todos():
     print(colorize(f"Saved {len(todos)} tasks to {SAVE_FILE}", GREEN))
 
 def load_todos():
-    data = json.load(open(SAVE_FILE))
-    todos.extend(data)
-    print(colorize(f"Loaded {len(data)} tasks.", CYAN))
+    if not os.path.exists(SAVE_FILE):
+        return
+    try:
+        with open(SAVE_FILE) as f:
+            data = json.load(f)
+        todos.extend(data)
+        print(colorize(f"Loaded {len(data)} tasks.", CYAN))
+    except (json.JSONDecodeError, KeyError):
+        print(colorize("Warning: save file corrupted, starting fresh.", YELLOW))
