@@ -61,3 +61,12 @@ def list_todos(show_done=True):
     for i, task in enumerate(visible, 1):
         print_task(i, task)
     print()
+
+def complete_todo(index):
+    if index < 1 or index > len(todos):
+        print(colorize("Invalid task number.", RED))
+        return
+    task = todos[index]
+    task["done"] = True
+    history.append(("complete", task["id"]))
+    print(colorize(f"Completed: {task['title']}", GREEN))
