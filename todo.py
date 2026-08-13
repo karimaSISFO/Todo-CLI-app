@@ -49,4 +49,5 @@ def add_todo(title, priority="MED", due=None, tags=None):
         return
     task = make_task(title, priority, due, tags)
     todos.append(task)
+    history.append(("add", task["id"]))
     print(colorize(f"Added: {title}", GREEN))
