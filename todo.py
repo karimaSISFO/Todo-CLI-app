@@ -146,3 +146,7 @@ def filter_by_priority(pri):
     for i, task in enumerate(results, 1):
         print_task(i, task)
     print()
+
+def get_overdue():
+    today = datetime.now().strftime("%Y-%m-%d")
+    return [t for t in todos if t["due"] and t["due"] < today and not t["done"]]
