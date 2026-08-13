@@ -51,3 +51,13 @@ def add_todo(title, priority="MED", due=None, tags=None):
     todos.append(task)
     history.append(("add", task["id"]))
     print(colorize(f"Added: {title}", GREEN))
+
+def list_todos(show_done=True):
+    visible = todos if show_done else [t for t in todos if not t["done"]]
+    if not visible:
+        print(colorize("  No tasks found.", GRAY))
+        return
+    print(colorize(f"\n  Tasks ({len(visible)}):", BOLD))
+    for i, task in enumerate(visible, 1):
+        print_task(i, task)
+    print()
