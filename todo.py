@@ -1,6 +1,7 @@
     import os
 import json
 from datetime import datetime
+from recur import reschedule
 
 SAVE_FILE = "todos.json"
 PRIORITIES = ["HIGH", "MED", "LOW"]
@@ -71,6 +72,8 @@ def complete_todo(index):
     task = todos[index - 1]
     task["done"] = True
     history.append(("complete", task["id"]))
+    if reschedule(task):
+        print(colorize(f"Recurring task rescheduled: next due {task['due']}", CYAN))
     print(colorize(f"Completed: {task['title']}", GREEN))
 
 def delete_todo(index):
