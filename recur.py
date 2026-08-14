@@ -27,3 +27,13 @@ def next_due(task):
         return current.replace(year=year, month=month, day=day).strftime("%Y-%m-%d")
     delta = INTERVALS[repeat]
     return (current + delta).strftime("%Y-%m-%d")
+
+def reschedule(task):
+    """Reset done and advance due date if task is recurring."""
+    new_due = next_due(task)
+    if new_due:
+        task["done"]    = False
+        task["due"]     = new_due
+        task["streak"]  = task.get("streak", 0) + 1
+        return True
+    return False
