@@ -41,3 +41,15 @@ def archive_done():
         json.dump(existing, f, indent=2)
     todos[:] = [t for t in todos if not t["done"]]
     print(colorize(f"Archived {len(done_tasks)} completed task(s).", GREEN))
+
+def view_archive():
+    archive_file = "archive.json"
+    if not os.path.exists(archive_file):
+        print(colorize("No archive found.", GRAY))
+        return
+    with open(archive_file) as f:
+        tasks = json.load(f)
+    print(colorize(f"\n  Archive ({len(tasks)} tasks):", BOLD))
+    for i, task in enumerate(tasks, 1):
+        print_task(i, task)
+    print()
