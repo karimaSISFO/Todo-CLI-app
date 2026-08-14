@@ -17,8 +17,13 @@ def next_due(task):
         return None
     if repeat == "monthly":
         month = current.month + 1
-        year  = current.year + (month > 12)
-        month = month if month <= 12 else 1
-        return current.replace(year=year, month=month).strftime("%Y-%m-%d")
+        year  = current.year
+        if month > 12:
+            month = 1
+            year += 1
+        import calendar
+        last_day = calendar.monthrange(year, month)[1]
+        day = min(current.day, last_day)
+        return current.replace(year=year, month=month, day=day).strftime("%Y-%m-%d")
     delta = INTERVALS[repeat]
     return (current + delta).strftime("%Y-%m-%d")
