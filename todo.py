@@ -19,6 +19,9 @@ def bulk_complete(indices):
             print(colorize(f"  Skipping invalid index: {idx}", GRAY))
             continue
         task = todos[idx - 1]
+        if task["done"]:
+            print(colorize(f"  Already done: {task['title']}", GRAY))
+            continue
         task["done"] = True
         history.append(("complete", task["id"]))
         print(colorize(f"  Completed: {task['title']}", GREEN))
