@@ -12,3 +12,13 @@ def show_notes(index):
     for i, n in enumerate(items, 1):
         print(f"  {i}. {n['text']}", colorize(f"  ({n['at'][:10]})", GRAY))
     print()
+
+def bulk_complete(indices):
+    for idx in indices:
+        if idx < 1 or idx > len(todos):
+            print(colorize(f"  Skipping invalid index: {idx}", GRAY))
+            continue
+        task = todos[idx - 1]
+        task["done"] = True
+        history.append(("complete", task["id"]))
+        print(colorize(f"  Completed: {task['title']}", GREEN))
