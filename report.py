@@ -4,7 +4,7 @@ def daily_report(todos):
     today     = datetime.now().strftime("%Y-%m-%d")
     done      = [t for t in todos if t["done"]]
     pending   = [t for t in todos if not t["done"]]
-    due_today = [t for t in todos if t.get("due") == today and not t["done"]]
+    due_today = [t for t in todos if t.get("due","").startswith(today) and not t["done"]]
     lines = [
         f"=== Daily Report — {today} ===",
         f"Total tasks : {len(todos)}",
