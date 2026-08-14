@@ -16,7 +16,7 @@ def make_task(title, priority="MED", due=None, tags=None, repeat=None):
         "created": datetime.now().isoformat(),
         "due":     due,
         "tags":    tags or [],
-        "repeat":  repeat,
+        "repeat":  repeat if repeat in ("daily","weekly","monthly") else None,
         "streak":  0,
     }
 
