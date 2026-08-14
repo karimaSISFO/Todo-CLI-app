@@ -7,7 +7,7 @@ PRIORITIES = ["HIGH", "MED", "LOW"]
 todos = []
 history = []
 
-def make_task(title, priority="MED", due=None, tags=None):
+def make_task(title, priority="MED", due=None, tags=None, repeat=None):
     return {
         "id":      int(datetime.now().timestamp() * 1000),
         "title":   title,
@@ -16,6 +16,8 @@ def make_task(title, priority="MED", due=None, tags=None):
         "created": datetime.now().isoformat(),
         "due":     due,
         "tags":    tags or [],
+        "repeat":  repeat,
+        "streak":  0,
     }
 
 RESET  = "\033[0m"
