@@ -23,3 +23,34 @@ def bold(text):
 
 def dim(text):
     return f"{DIM}{text}{RESET}"
+
+THEMES = {
+    "default": {
+        "accent":  "\033[36m",
+        "success": "\033[32m",
+        "warning": "\033[93m",
+        "error":   "\033[31m",
+    },
+    "pastel": {
+        "accent":  "\033[96m",
+        "success": "\033[92m",
+        "warning": "\033[33m",
+        "error":   "\033[91m",
+    },
+    "mono": {
+        "accent":  "\033[1m",
+        "success": "\033[1m",
+        "warning": "\033[2m",
+        "error":   "\033[7m",
+    },
+}
+
+_active_theme = "default"
+
+def set_theme(name):
+    global _active_theme
+    if name in THEMES:
+        _active_theme = name
+
+def theme_color(role):
+    return THEMES.get(_active_theme, THEMES["default"]).get(role, RESET)
