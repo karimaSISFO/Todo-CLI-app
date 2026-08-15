@@ -53,3 +53,20 @@ def view_archive():
     for i, task in enumerate(tasks, 1):
         print_task(i, task)
     print()
+
+def due_soon(days=3):
+    from datetime import datetime, timedelta
+    today = datetime.now().date()
+    cutoff = today + timedelta(days=days)
+    results = [
+        t for t in todos
+        if t.get("due") and not t["done"]
+        and today <= datetime.fromisoformat(t["due"]).date() <= cutoff
+    ]
+    if not results:
+        print(colorize(f"  No tasks due in the next {days} day(s).", GRAY))
+        return
+    print(colorize(f"\n  Due in next {days} day(s):", BOLD))
+    for i, task in enumerate(results, 1):
+        print_task(i, task)
+    print()
