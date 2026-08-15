@@ -21,7 +21,8 @@ def init_db():
             due      TEXT,
             tags     TEXT,
             repeat   TEXT,
-            streak   INTEGER DEFAULT 0
+            streak   INTEGER DEFAULT 0,
+            notes    TEXT DEFAULT '[]'
         )
     """)
     conn.commit()
