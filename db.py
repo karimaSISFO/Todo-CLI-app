@@ -59,7 +59,7 @@ def fetch_all():
             "id":       r["id"],
             "title":    r["title"],
             "priority": r["priority"],
-            "done":     r["done"],
+            "done":     bool(r["done"]),
             "created":  r["created"],
             "due":      r["due"],
             "tags":     json.loads(r["tags"] or "[]"),
