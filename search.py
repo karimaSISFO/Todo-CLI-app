@@ -10,6 +10,9 @@ def score_task(task, keyword):
             score += 3
     if task.get("due") and kw in task["due"]:
         score += 2
+    for note in task.get("notes", []):
+        if kw in note.get("text","").lower():
+            score += 1
     if not task["done"]:
         score += 1
     return score
