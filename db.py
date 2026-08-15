@@ -27,3 +27,24 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+
+def insert_task(task):
+    conn = get_conn()
+    conn.execute("""
+        INSERT OR REPLACE INTO tasks
+        (id, title, priority, done, created, due, tags, repeat, streak, notes)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        task["id"],
+        task["title"],
+        task["priority"],
+        int(task["done"]),
+        task.get("created"),
+        task.get("due"),
+        json.dumps(task.get("tags", [])),
+        task.get("repeat"),
+        task.get("streak", 0),
+        json.dumps(task.get("notes", [])),
+    ))
+    conn.commit()
+    conn.close()
