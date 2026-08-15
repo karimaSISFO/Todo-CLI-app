@@ -6,6 +6,7 @@ REPEATS    = ["daily", "weekly", "monthly", None]
 def validate_title(title):
     if not title or not title.strip():
         return False, "Title cannot be empty."
+    title = title.strip()
     if len(title) > 200:
         return False, "Title too long (max 200 chars)."
     return True, None
