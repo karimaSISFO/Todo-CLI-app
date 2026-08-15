@@ -48,3 +48,23 @@ def insert_task(task):
     ))
     conn.commit()
     conn.close()
+
+def fetch_all():
+    conn = get_conn()
+    rows = conn.execute("SELECT * FROM tasks ORDER BY created").fetchall()
+    conn.close()
+    tasks = []
+    for r in rows:
+        tasks.append({
+            "id":       r["id"],
+            "title":    r["title"],
+            "priority": r["priority"],
+            "done":     r["done"],
+            "created":  r["created"],
+            "due":      r["due"],
+            "tags":     json.loads(r["tags"] or "[]"),
+            "repeat":   r["repeat"],
+            "streak":   r["streak"],
+            "notes":    json.loads(r["notes"] or "[]"),
+        })
+    return tasks
