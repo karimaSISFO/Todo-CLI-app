@@ -70,3 +70,11 @@ def due_soon(days=3):
     for i, task in enumerate(results, 1):
         print_task(i, task)
     print()
+
+def pin_task(index):
+    if index < 1 or index > len(todos):
+        print(colorize("Invalid task number.", RED)); return
+    task = todos[index - 1]
+    task["pinned"] = not task.get("pinned", False)
+    state = "Pinned" if task["pinned"] else "Unpinned"
+    print(colorize(f"  {state}: {task['title']}", CYAN))
