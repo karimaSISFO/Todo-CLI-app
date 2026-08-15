@@ -6,6 +6,10 @@ def migrate_from_json(json_file="todos.json"):
     if not os.path.exists(json_file):
         print(f"No {json_file} found, nothing to migrate.")
         return
+    import shutil
+    backup = json_file + ".bak"
+    shutil.copy(json_file, backup)
+    print(f"Backed up to {backup}")
     init_db()
     with open(json_file) as f:
         tasks = json.load(f)
