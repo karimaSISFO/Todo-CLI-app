@@ -9,7 +9,7 @@ def confirm(text):
     ans = input(colorize(f"  {text} (y/n): ", YELLOW)).strip().lower()
     return ans == "y"
 
-def menu_header(title):
+def section(title):
     print(colorize(f"\n  ── {title} ", BOLD) + colorize("─" * (30 - len(title)), GRAY))
 
 def error(msg):
