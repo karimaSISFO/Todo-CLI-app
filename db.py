@@ -68,3 +68,18 @@ def fetch_all():
             "notes":    json.loads(r["notes"] or "[]"),
         })
     return tasks
+
+def delete_task(task_id):
+    conn = get_conn()
+    conn.execute("DELETE FROM tasks WHERE id = ?", (task_id,))
+    conn.commit()
+    conn.close()
+
+def sync_all(tasks):
+    """Overwrite DB with current in-memory task list."""
+    conn = get_conn()
+    conn.execute("DELETE FROM tasks")
+    conn.commit()
+    conn.close()
+    for t in tasks:
+        insert_task(t)
