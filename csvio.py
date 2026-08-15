@@ -9,8 +9,10 @@ def export_csv(todos, path="todos.csv"):
         w.writeheader()
         for t in todos:
             row = dict(t)
-            row["tags"] = "|".join(t.get("tags", []))
-            row["done"] = int(t["done"])
+            row["tags"]   = "|".join(t.get("tags", []))
+            row["done"]   = int(t.get("done", False))
+            row["repeat"] = t.get("repeat") or ""
+            row["streak"] = t.get("streak", 0)
             w.writerow(row)
     return path
 
