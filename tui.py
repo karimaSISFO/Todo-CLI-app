@@ -30,3 +30,21 @@ def draw_row(text, width=60, selected=False):
         content = content[:width - 7] + "..."
     pad = width - 2 - len(content)
     print("│" + content + " " * pad + "│")
+
+def render_task_row(i, task, selected=False, width=60):
+    pri_sym = {"HIGH": "!", "MED": "-", "LOW": "·"}.get(task["priority"], "-")
+    check   = "x" if task["done"] else " "
+    pin     = "📌" if task.get("pinned") else "  "
+    streak  = f"🔥{task['streak']}" if task.get("streak") else ""
+    due     = f" [{task['due']}]" if task.get("due") else ""
+    title   = task["title"]
+    text    = f"[{check}] {pri_sym} {pin} {title}{due} {streak}"
+    draw_row(text, width, selected)
+
+def render_task_list(todos, selected_idx=0, width=60):
+    draw_box("TODO LIST", width)
+    if not todos:
+        draw_row("No tasks. Press 'a' to add.", width)
+    for i, task in enumerate(todos):
+        render_task_row(i + 1, task, selected=(i == selected_idx), width=width)
+    draw_footer(f"{len(todos)} tasks | a:add d:done x:del q:quit", width)
