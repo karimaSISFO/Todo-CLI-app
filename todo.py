@@ -170,3 +170,16 @@ def pin_task(index):
     task["pinned"] = not task.get("pinned", False)
     state = "Pinned" if task["pinned"] else "Unpinned"
     print(colorize(f"  {state}: {task['title']}", CYAN))
+
+def batch_delete(indices):
+    indices = sorted(set(indices), reverse=True)
+    deleted = 0
+    for idx in indices:
+        if 1 <= idx <= len(todos):
+            task = todos.pop(idx - 1)
+            history.append(("delete", task))
+            print(colorize(f"  Deleted: {task['title']}", YELLOW))
+            deleted += 1
+        else:
+            print(colorize(f"  Skipped invalid index: {idx}", GRAY))
+    print(colorize(f"  Removed {deleted} task(s).", RED))
