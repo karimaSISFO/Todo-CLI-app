@@ -78,19 +78,23 @@ def pin_task(index):
     task["pinned"] = not task.get("pinned", False)
     state = "Pinned" if task["pinned"] else "Unpinned"
     print(colorize(f"  {state}: {task['title']}", CYAN))HELP = colorize("""
-  add          Add new task           list         List all tasks
+  add          Add task               list         List all tasks
   pending      Pending only           done         Mark complete
-  bulk         Complete many          del          Delete task
-  edit         Edit task fields       pin          Pin/unpin task
+  bulk         Complete many          batch-del    Delete many
+  del          Delete task            edit         Edit task
+  pin          Pin/unpin task         focus        Pomodoro timer
   undo         Undo last action       search       Ranked search
-  tag          Filter by tag          pri          Filter by priority
+  tag          Filter by tag          pri          Filter priority
   sort         Sort tasks             soon         Due in N days
-  overdue      Show overdue           stats        Stats + progress
+  overdue      Overdue tasks          stats        Stats + streaks
   note         Add/view notes         report       Daily report
-  archive      Archive done           archive-view Browse archive
+  weekly       Weekly report          archive      Archive done
+  archive-view Browse archive         tui          Interactive UI
+  tmpl-save    Save as template       tmpl-use     Use template
+  tmpl-list    List templates         theme        Color theme
   csv-export   Export CSV             csv-import   Import CSV
-  theme        Switch color theme     save         Save to file
-  export       Export JSON            quit         Save and exit
+  save         Save to file           export       Export JSON
+  quit         Save and exit
 """, CYAN)_notes(index):
     if index < 1 or index > len(todos):
         print(colorize("Invalid task number.", RED))
