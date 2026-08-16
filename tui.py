@@ -48,3 +48,18 @@ def render_task_list(todos, selected_idx=0, width=60):
     for i, task in enumerate(todos):
         render_task_row(i + 1, task, selected=(i == selected_idx), width=width)
     draw_footer(f"{len(todos)} tasks | a:add d:done x:del q:quit", width)
+
+def get_key():
+    """Read single keypress cross-platform."""
+    if os.name == "nt":
+        import msvcrt
+        return msvcrt.getch().decode("utf-8", errors="ignore")
+    else:
+        import tty, termios
+        fd = sys.stdin.fileno()
+        old = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)
+            return sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old)
