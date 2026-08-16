@@ -23,3 +23,26 @@ def save_report(todos, path="report.txt"):
     with open(path, "w") as f:
         f.write(content)
     return path
+
+def weekly_report(todos):
+    from datetime import datetime, timedelta
+    today  = datetime.now().date()
+    start  = today - timedelta(days=today.weekday())
+    end    = start + timedelta(days=6)
+    done   = [t for t in todos if t["done"]]
+    week_done = [
+        t for t in done
+        if t.get("created") and
+        start <= datetime.fromisoformat(t["created"]).date() <= end
+    ]
+    lines = [
+        f"=== Weekly Report — {start} to {end} ===",
+        f"Completed this week : {len(week_done)}",
+        f"Total tasks         : {len(todos)}",
+        f"Still pending       : {sum(1 for t in todos if not t['done'])}",
+    ]
+    if week_done:
+        lines.append("\nCompleted this week:")
+        for t in week_done:
+            lines.append(f"  ✓ {t['title']}")
+    return "\n".join(lines)
