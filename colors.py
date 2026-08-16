@@ -54,3 +54,10 @@ def set_theme(name):
 
 def theme_color(role):
     return THEMES.get(_active_theme, THEMES["default"]).get(role, RESET)
+
+TAG_COLORS = [CYAN, GREEN, MAGENTA, YELLOW, BLUE, RED]
+
+def tag_color(tag):
+    """Deterministic color per tag name."""
+    idx = sum(ord(c) for c in tag) % len(TAG_COLORS)
+    return TAG_COLORS[idx]
