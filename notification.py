@@ -14,5 +14,5 @@ def notify(title, message):
         elif system == "Windows":
             # requires win10toast or plyer in prod
             print(f"[notify] {title}: {message}")
-    except Exception:
-        pass  # silently skip if notify unavailable
+    except FileNotFoundError:
+        pass  # silently skip if tool not available
