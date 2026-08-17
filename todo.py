@@ -187,3 +187,16 @@ def batch_delete(indices):
         else:
             print(colorize(f"  Skipped invalid index: {idx}", GRAY))
     print(colorize(f"  Removed {deleted} task(s).", RED))
+
+def batch_delete(indices):
+    indices = sorted(set(indices), reverse=True)
+    deleted = 0
+    for idx in indices:
+        if 1 <= idx <= len(todos):
+            task = todos.pop(idx - 1)
+            history.append(("delete", task))
+            print(colorize(f"  Deleted: {task['title']}", YELLOW))
+            deleted += 1
+        else:
+            print(colorize(f"  Skipped invalid index: {idx}", GRAY))
+    print(colorize(f"  Removed {deleted} task(s).", RED))
