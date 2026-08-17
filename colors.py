@@ -61,3 +61,10 @@ def tag_color(tag):
     """Deterministic color per tag name."""
     idx = sum(ord(c) for c in tag) % len(TAG_COLORS)
     return TAG_COLORS[idx]
+
+TAG_COLORS = [CYAN, GREEN, MAGENTA, YELLOW, BLUE, RED]
+
+def tag_color(tag):
+    """Deterministic color per tag name."""
+    idx = sum(ord(c) for c in tag) % len(TAG_COLORS)
+    return TAG_COLORS[idx]
