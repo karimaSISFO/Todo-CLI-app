@@ -14,4 +14,6 @@ def streak_summary(todos):
     return active
 
 def total_completions(todos):
-    return sum(t.get("streak", 0) for t in todos)
+    recurring = sum(t.get("streak", 0) for t in todos)
+    done_once  = sum(1 for t in todos if t.get("done") and not t.get("repeat"))
+    return recurring + done_once
