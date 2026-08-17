@@ -31,6 +31,13 @@ def _safe_date(s):
     except (ValueError, TypeError):
         return None
 
+def _safe_date(s):
+    try:
+        from datetime import datetime
+        return datetime.fromisoformat(s).date()
+    except (ValueError, TypeError):
+        return None
+
 def weekly_report(todos):
     from datetime import datetime, timedelta
     today  = datetime.now().date()
@@ -54,6 +61,13 @@ def weekly_report(todos):
             lines.append(f"  ✓ {t['title']}")
     return "\n".join(lines)
 
+def _safe_date(s):
+    try:
+        from datetime import datetime
+        return datetime.fromisoformat(s).date()
+    except (ValueError, TypeError):
+        return None
+
 def weekly_report(todos):
     from datetime import datetime, timedelta
     today  = datetime.now().date()
@@ -62,8 +76,8 @@ def weekly_report(todos):
     done   = [t for t in todos if t["done"]]
     week_done = [
         t for t in done
-        if t.get("created") and
-        start <= datetime.fromisoformat(t["created"]).date() <= end
+        if t.get("created") and _safe_date(t["created"]) and
+        start <= _safe_date(t["created"]) <= end
     ]
     lines = [
         f"=== Weekly Report — {start} to {end} ===",
