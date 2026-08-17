@@ -63,3 +63,31 @@ def get_key():
             return sys.stdin.read(1)
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+def run_tui(todos):
+    idx = 0
+    while True:
+        clear()
+        w, _ = terminal_size()
+        w = min(w, 80)
+        render_task_list(todos, idx, w)
+        key = get_key()
+        if key in ("q", "Q"):
+            break
+        elif key == "UP" and idx > 0:
+            idx -= 1
+        elif key == "DOWN" and idx < len(todos) - 1:
+            idx += 1
+        elif key in ("j",) and idx < len(todos) - 1:
+            idx += 1
+        elif key in ("k",) and idx > 0:
+            idx -= 1
+        elif key in ("d", "D") and todos:
+            todos[idx]["done"] = True
+        elif key in ("x", "X") and todos:
+            todos.pop(idx)
+            idx = max(0, idx - 1)
+        elif key in ("p", "P") and todos:
+            t = todos[idx]
+            t["pinned"] = not t.get("pinned", False)
+    return todos
