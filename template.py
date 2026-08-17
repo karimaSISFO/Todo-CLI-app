@@ -19,7 +19,7 @@ def add_template(name, task):
         "priority": task.get("priority", "MED"),
         "tags":     task.get("tags", []),
         "repeat":   task.get("repeat"),
-        # due intentionally omitted; set fresh each use
+        "due":      None,
     }
     save_templates(templates)
     return name
