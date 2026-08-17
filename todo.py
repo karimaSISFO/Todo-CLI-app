@@ -189,7 +189,7 @@ def batch_delete(indices):
     print(colorize(f"  Removed {deleted} task(s).", RED))
 
 def batch_delete(indices):
-    indices = sorted(set(indices), reverse=True)
+    indices = sorted({int(i) for i in indices}, reverse=True)
     deleted = 0
     for idx in indices:
         if 1 <= idx <= len(todos):
