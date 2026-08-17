@@ -1,7 +1,7 @@
 
 def show_notes(index):
     if index < 1 or index > len(todos):
-        print(colorize("Invalid task number.", RED))
+        print(colorize("Invalid", RED))
         return
     task  = todos[index - 1]
     items = get_notes(task["id"])
